@@ -334,8 +334,6 @@ namespace bimg
 		const uint16_t minBlockY   = blockInfo.minBlockY;
 		const uint8_t  blockSize   = blockInfo.blockSize;
 
-		_width  = bx::max<uint16_t>(blockWidth  * minBlockX, ( (_width  + blockWidth  - 1) / blockWidth)*blockWidth);
-		_height = bx::max<uint16_t>(blockHeight * minBlockY, ( (_height + blockHeight - 1) / blockHeight)*blockHeight);
 		_depth  = bx::max<uint16_t>(1, _depth);
 		const uint8_t  numMips = calcNumMips(_hasMips, _width, _height, _depth);
 		const uint32_t sides   = _cubeMap ? 6 : 1;
@@ -363,8 +361,8 @@ namespace bimg
 		if (NULL != _info)
 		{
 			_info->format  = _format;
-			_info->width   = _width;
-			_info->height  = _height;
+			_info->width   = bx::max<uint16_t>(blockWidth * minBlockX, ((_width + blockWidth - 1) / blockWidth) * blockWidth);;
+			_info->height  = bx::max<uint16_t>(blockHeight * minBlockY, ((_height + blockHeight - 1) / blockHeight) * blockHeight);;
 			_info->depth   = _depth;
 			_info->numMips = numMips;
 			_info->numLayers = _numLayers;
